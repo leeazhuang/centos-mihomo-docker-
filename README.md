@@ -22,7 +22,6 @@ chmod +x mihomo
 ./mihomo -v
 ```
 
-![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
 
 如果提示：mihomo: 未找到命令...
 
@@ -35,7 +34,6 @@ mv /安装路径/mihomo /usr/local/bin/mihomo
 mihomo -v
 ```
 
-![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
 
 然后
 
@@ -49,7 +47,6 @@ wget -O config.yaml "你的订阅链接"
 mihomo -d /data/clash
 ```
 
-![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
 
 新开一个终端窗口，执行：
 
@@ -62,7 +59,6 @@ curl -I https://www.google.com
 # 返回 HTTP/2 200 就说明代理工作正常。
 ```
 
-![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
 
 ### 2、设置开机自启
 
@@ -72,7 +68,6 @@ curl -I https://www.google.com
 vi /etc/systemd/system/mihomo.service
 ```
 
-![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
 
 写入以下内容：
 
@@ -91,7 +86,6 @@ RestartSec=5
 WantedBy=multi-user.target
 ```
 
-![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
 
 **第二步：启用并启动**
 
@@ -112,8 +106,6 @@ systemctl start mihomo
 systemctl status mihomo
 ```
 
-![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
-
 状态显示 `Active: active (running)` 就成功了。
 
 ------
@@ -126,7 +118,6 @@ systemctl restart mihomo   # 重启
 journalctl -u mihomo -f    # 实时查看日志
 ```
 
-![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
 
 
 
@@ -138,7 +129,6 @@ journalctl -u mihomo -f    # 实时查看日志
 https://metacubex.github.io/metacubexd/
 ```
 
-![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
 
 然后后端地址填你服务器的 **IP**：
 
@@ -146,7 +136,6 @@ https://metacubex.github.io/metacubexd/
 http://x.x.x.x:9090
 ```
 
-![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
 
 
 
@@ -172,7 +161,6 @@ systemctl restart docker
 docker pull imagesname
 ```
 
-![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
 
 以后所有 `docker pull` 都会走代理，包括：
 
@@ -197,7 +185,6 @@ systemctl daemon-reload
 systemctl restart docker
 ```
 
-![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
 
 或者如果以后还可能用到，不想删文件，可以只把文件内容清空或注释掉：
 
@@ -205,6 +192,5 @@ systemctl restart docker
 vi /etc/systemd/system/docker.service.d/proxy.conf
 ```
 
-![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
 
 把三行 `Environment` 前面加 `#` 注释掉，然后同样重启 Docker。
