@@ -194,3 +194,51 @@ vi /etc/systemd/system/docker.service.d/proxy.conf
 
 
 把三行 `Environment` 前面加 `#` 注释掉，然后同样重启 Docker。
+
+
+
+
+## Docker Pull 代理快速开关方案
+
+### 1. 编辑 ~/.bashrc
+
+```bash
+vi ~/.bashrc
+```
+
+在文件末尾添加：
+
+```bash
+alias docker-proxy-on='mkdir -p /etc/systemd/system/docker.service.d && printf "[Service]\nEnvironment=\"HTTP_PROXY=http://127.0.0.1:7890\"\nEnvironment=\"HTTPS_PROXY=http://127.0.0.1:7890\"\nEnvironment=\"NO_PROXY=localhost,127.0.0.1\"\n" > /etc/systemd/system/docker.service.d/proxy.conf && systemctl daemon-reload && systemctl restart docker && echo "Docker 代理已开启"'
+
+alias docker-proxy-off='rm -f /etc/systemd/system/docker.service.d/proxy.conf && systemctl daemon-reload && systemctl restart docker && echo "Docker 代理已关闭"'
+```
+
+### 2. 生效配置
+
+```bash
+source ~/.bashrc
+```
+
+### 3. 日常使用
+
+```bash
+docker-proxy-on    # 开启代理
+docker pull xxx    # 拉取镜像
+docker-proxy-off   # 关闭代理
+```
+
+### 4. 验证是否生效
+
+```bash
+# 查看配置文件是否存在
+ls -la /etc/systemd/system/docker.service.d/
+
+# 查看文件内容
+cat /etc/systemd/system/docker.service.d/proxy.conf
+
+# 查看 Docker 是否读取到代理环境变量
+systemctl show docker | grep -i proxy
+```
+
+> **注意：** 代理地址 `127.0.0.1:7890` 根据你本机代理端口自行修改。
